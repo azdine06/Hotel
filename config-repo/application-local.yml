@@ -1,0 +1,17 @@
+spring:
+  liquibase:
+    contexts: demo
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC
+        connectTimeout: 5000
+        readTimeout: 10000
+
+custom:
+  service:
+    contact: http://localhost:6001
+    traction-referential: http://localhost:6004
+    billing: http://localhost:6005

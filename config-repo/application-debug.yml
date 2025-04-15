@@ -1,0 +1,19 @@
+logging:
+  level:
+    root: info
+    org:
+      hibernate:
+        SQL: debug
+        orm.jdbc.bind: trace
+      springframework:
+        security: trace
+        cloud.gateway: DEBUG
+#    org.postgresql: TRACE
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+        connectTimeout: 5000
+        readTimeout: 10000

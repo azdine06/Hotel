@@ -1,0 +1,107 @@
+server:
+  error:
+    include-stacktrace: on-param
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${DISCOVERY_HOST:localhost:8761}/eureka/
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+  liquibase:
+#    enabled: false
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}/${DB_NAME:ids}?${DB_PARAMS}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    open-in-view: false
+#    database: POSTGRESQL
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      org.hibernate:
+        # https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#envers
+        envers:
+#          default_schema: public
+          use_revision_entity_with_native_id: true
+          audit_strategy: org.hibernate.envers.strategy.internal.ValidityAuditStrategy
+          audit_strategy_validity_store_revend_timestamp: true
+          audit_strategy_validity_revend_timestamp_field_name: revend_timestamp
+  #          track_entities_changed_in_revision: false
+#          global_with_modified_flag: false
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: NONE
+        connectTimeout: 3000
+        readTimeout: 7000
+
+custom:
+  service:
+    contact: http://contact-ms:6001
+    traction-referential: http://traction-referential-ms:6004
+    billing: http://billing-ms:6005
+
+#  security:
+#    #    user:
+#    #      name: admin
+#    #      password: 1234
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${app.keycloak.auth-server-url}/realms/${app.keycloak.realm}
+#          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+  zipkin:
+    base-url: http://${ZIPKIN_HOST:localhost:9411}/
+    sender:
+      type: web
+  sleuth:
+    sampler:
+      probability: 1.0
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
+springdoc:
+  show-oauth2-endpoints: true
+  show-login-endpoint: true
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+  info:
+    title: ${spring.application.name}
+    description: ""
+    version: "v1.0.0"
+    terms-of-service: "http://innov-ds.ma/terms"
+    contact:
+      name: "INNOV DS"
+      email: "innov.ds@gmail.com"
+      url: "http://innov-ds.ma"
+#    license:
+#      name: "Licence Apache 2.0"
+#      url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+app:
+  keycloak:
+    auth-server-url: ${KEYCLOAK_SERVER_URL:http://localhost:9080}
+    realm: ${KEYCLOAK_REALM:ids-realm}
+    resource: ${KEYCLOAK_RESOURCE:ids-client}
+    #  public-client: true
+    principal-attribute: preferred_username
+    credentials:
+      secret: ${KEYCLOAK_SECRET:qao7clzorsfvnpP28ORGb4lSBzU7OgX7}
+

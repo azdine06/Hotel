@@ -1,0 +1,5 @@
+DB_USERNAME: billing_user
+DB_PASSWORD: password
+
+server:
+  port: 6005

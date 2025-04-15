@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: contact-service
+          uri: lb://CONTACT-MS
+          predicates:
+            - Path=/contact/**
+          filters:
+            - StripPrefix=1
+        #            - RewritePath=/contact/(?<remaining>.*), /${remaining} # Réécrit l'URL pour Swagger UI
+        - id: traction-referential-service
+          uri: lb://TRACTION-REFERENTIAL-MS
+          predicates:
+            - Path=/referential/**
+          filters:
+            - StripPrefix=1
+        - id: traction-service
+          uri: lb://TRACTION-MS
+          predicates:
+            - Path=/traction/**
+          filters:
+            - StripPrefix=1
+  #        - id: billing-service
+  #          uri: lb://BILLING-MS
+  #          predicates:
+  #            - Path=/billing/**
+  #          filters:
+  #            - StripPrefix=1

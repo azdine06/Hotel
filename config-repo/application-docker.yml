@@ -1,0 +1,8 @@
+DB_HOST: postgres
+ZIPKIN_HOST: zipkin:9411
+DISCOVERY_HOST: discovery-service:8761
+KEYCLOAK_SERVER_URL: http://keycloak:9080
+
+spring:
+  liquibase:
+    contexts: demo
