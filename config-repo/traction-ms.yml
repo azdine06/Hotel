@@ -1,5 +1,0 @@
-DB_USERNAME: traction_user
-DB_PASSWORD: password
-
-server:
-  port: 6006

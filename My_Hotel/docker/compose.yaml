@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     shm_size: 2g
     environment:
-      - POSTGRES_db=my_hotel
+      - POSTGRES_DB=my_hotel
       - POSTGRES_PASSWORD=postgres
       - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
